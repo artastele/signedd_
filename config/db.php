@@ -15,30 +15,26 @@ class Database {
         $dbname = env('DB_NAME', 'sped_lms');
         $username = env('DB_USER', 'root');
         $password = env('DB_PASS', '');
-        $charset = 'utf8mb4';
+        $port = env('DB_PORT', '5432');
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        // PostgreSQL DSN
+        $dsn = "pgsql:host=$host;port=$port;dbname=$dbname";
         
-        // CRITICAL: Use INIT_COMMAND to force autocommit at connection level
+        // PostgreSQL connection options
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-            PDO::MYSQL_ATTR_INIT_COMMAND => "SET autocommit=1, SESSION sql_mode='NO_AUTO_VALUE_ON_ZERO'"
+            PDO::ATTR_EMULATE_PREPARES   => false
         ];
 
         try {
             $this->connection = new PDO($dsn, $username, $password, $options);
             
-            // Double-check autocommit is ON
-            $autocommit = $this->connection->query("SELECT @@autocommit")->fetchColumn();
-            if (!$autocommit) {
-                // Force it ON if somehow it's still OFF
-                $this->connection->exec("SET autocommit=1");
-                error_log("WARNING: Had to manually enable autocommit");
-            }
+            // PostgreSQL uses autocommit by default (no transaction in progress)
+            // Set to autocommit mode (disable implicit transactions)
+            $this->connection->setAttribute(PDO::ATTR_AUTOCOMMIT, true);
             
-            error_log("Database connected with autocommit=" . ($autocommit ? "ON" : "OFF"));
+            error_log("Database connected to PostgreSQL successfully");
         } catch (PDOException $e) {
             error_log("Database connection failed: " . $e->getMessage());
             die("Database connection failed. Please check your configuration.");
