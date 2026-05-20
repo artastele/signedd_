@@ -1,0 +1,7 @@
+Place your logo files here:
+
+1. logo.png - Small logo for sidebar (recommended: 200x200px)
+2. logo-large.png - Large logo for login/register pages (recommended: 500x500px)
+3. favicon.ico - Browser tab icon (16x16px or 32x32px)
+
+Preferred format: PNG with transparent background

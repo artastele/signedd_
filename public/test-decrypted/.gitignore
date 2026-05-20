@@ -1,0 +1,5 @@
+# Ignore all decrypted test files
+*
+!.gitignore
+!.htaccess
+!index.php

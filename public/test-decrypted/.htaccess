@@ -1,0 +1,18 @@
+# Allow direct access to decrypted test files
+Options +Indexes
+DirectoryIndex index.php
+
+# Enable MIME types
+AddType application/pdf .pdf
+AddType image/jpeg .jpg .jpeg
+AddType image/png .png
+AddType image/gif .gif
+AddType video/mp4 .mp4
+AddType video/webm .webm
+AddType audio/mpeg .mp3
+
+# Disable PHP execution for security (except index.php)
+<FilesMatch "\.php$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>

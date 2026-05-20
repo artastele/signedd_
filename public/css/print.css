@@ -1,0 +1,187 @@
+﻿/* ============================================================
+   SPED LMS -- Print CSS (Process 5 -- IEP Print Layout)
+   DO NOT ALTER WITHOUT APPROVAL -- Process 5
+   Last modified: 2026-05-08
+   DepEd Part III format: clean, no UI chrome
+   ============================================================ */
+
+@media print {
+
+    /* ---- Hide ALL system UI ---- */
+    .sidebar,
+    #sidebar,
+    .topbar,
+    #topbar,
+    .sidebar-overlay,
+    nav,
+    footer,
+    .modal,
+    .modal-backdrop,
+    .modal-open .modal,
+    /* Action buttons */
+    #btnSaveDraft,
+    #markSignedBtn,
+    #markSignedForm,
+    #addStepBtn,
+    #stepCountNote,
+    .remove-step-btn,
+    /* Panels and extras */
+    #uploadSection,
+    #mobilePdspBtn,
+    #pdspPanel,
+    #splitViewContainer > div:last-child,
+    .signing-method-card,
+    .digital-only,
+    /* Bootstrap utility */
+    .btn-close,
+    .alert,
+    .dropdown,
+    .toast,
+    /* Signature pads */
+    canvas,
+    .mt-2 > button,
+    /* Card footers and action bars */
+    .card:last-of-type,
+    .card-footer,
+    /* Page header buttons */
+    .d-flex.align-items-start .d-flex.align-items-center {
+        display: none !important;
+    }
+
+    /* ---- Reset layout ---- */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+        font-family: Arial, sans-serif !important;
+        font-size: 10pt !important;
+        color: #000 !important;
+        width: 100% !important;
+    }
+
+    .main-content {
+        margin: 0 !important;
+        padding: 15px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* ---- Page header ---- */
+    h1 {
+        font-size: 14pt !important;
+        color: #000 !important;
+        text-align: center !important;
+        margin-bottom: 4px !important;
+    }
+    .badge {
+        background: none !important;
+        color: #000 !important;
+        border: 1px solid #000 !important;
+        padding: 1px 4px !important;
+        font-size: 8pt !important;
+    }
+    .text-muted { color: #333 !important; }
+
+    /* ---- Cards ---- */
+    .card {
+        border: 1px solid #000 !important;
+        box-shadow: none !important;
+        margin-bottom: 10px !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    .card-header {
+        background: #000 !important;
+        color: #fff !important;
+        padding: 5px 10px !important;
+        font-size: 10pt !important;
+        font-weight: bold !important;
+    }
+    .card-body {
+        padding: 8px 10px !important;
+    }
+
+    /* ---- Form inputs as plain text ---- */
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+        border: none !important;
+        border-bottom: 1px solid #000 !important;
+        border-radius: 0 !important;
+        padding: 1px 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        resize: none !important;
+        font-size: 9pt !important;
+        width: 100% !important;
+        -webkit-appearance: none !important;
+    }
+
+    /* ---- Steps table ---- */
+    #stepsTable {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 8pt !important;
+        table-layout: fixed !important;
+    }
+    #stepsTable th {
+        background: #000 !important;
+        color: #fff !important;
+        padding: 3px 4px !important;
+        border: 1px solid #000 !important;
+        font-size: 8pt !important;
+        word-wrap: break-word !important;
+    }
+    #stepsTable td {
+        border: 1px solid #666 !important;
+        padding: 3px 4px !important;
+        vertical-align: top !important;
+        word-wrap: break-word !important;
+    }
+    /* Never break a step row across pages */
+    .step-row {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+    /* Hide remove buttons in table */
+    #stepsTable td:last-child { display: none !important; }
+    #stepsTable th:last-child { display: none !important; }
+
+    /* ---- Steps panel: full width when PDSP panel hidden ---- */
+    #stepsPanel {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* ---- Signatories: show as signature lines ---- */
+    .signatory-name {
+        border: none !important;
+        border-bottom: 1px solid #000 !important;
+        min-width: 180px !important;
+        display: inline-block !important;
+        background: transparent !important;
+    }
+    /* Show signature images */
+    .signatory-sig-img,
+    .p-3 img {
+        max-height: 50px !important;
+        display: block !important;
+        margin-top: 3px !important;
+    }
+    /* Hide send buttons in signatories */
+    .p-3 .btn,
+    .p-3 canvas,
+    .p-3 .mt-2 > button { display: none !important; }
+
+    /* ---- Page breaks ---- */
+    .card { page-break-after: auto !important; }
+}

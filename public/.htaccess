@@ -1,0 +1,36 @@
+# DO NOT ALTER WITHOUT APPROVAL — Security Module
+# Last modified: 2026-05-03
+# Part of: SPED LMS — Apache Configuration
+
+# Enable PHP error logging
+php_flag display_errors Off
+php_flag log_errors On
+php_value error_log ../logs/php_error.log
+
+# Rewrite rules for clean URLs
+RewriteEngine On
+
+# Redirect to HTTPS (uncomment in production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Route all requests to index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Prevent directory listing
+Options -Indexes
+
+# Protect sensitive files
+<FilesMatch "\.(env|log|sql|md)$">
+    Require all denied
+</FilesMatch>

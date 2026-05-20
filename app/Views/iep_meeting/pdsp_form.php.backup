@@ -1,0 +1,545 @@
+<?php
+require __DIR__ . '/../layouts/header.php';
+require __DIR__ . '/../layouts/sidebar.php';
+require __DIR__ . '/../layouts/topbar.php';
+?>
+
+<div class="main-content">
+    <div class="container-fluid py-4">
+        <!-- Page Header -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <h1 class="h3 mb-0" style="color: #a01422;">
+                    <i class="bi bi-file-earmark-medical"></i> PDSP Form (Part II)
+                </h1>
+                <p class="text-muted mt-2">
+                    Present Levels of Development and Performance for <strong><?php echo htmlspecialchars($meeting['student_name']); ?></strong>
+                </p>
+            </div>
+            <div class="col-md-4 text-end">
+                <!-- Optional AI Extraction Button (Secondary Navy Style) -->
+                <button type="button" class="btn btn-secondary" style="background-color: #1e4072; border-color: #1e4072;" data-bs-toggle="modal" data-bs-target="#aiUploadModal">
+                    <i class="bi bi-cloud-upload"></i> Upload handwritten form (AI auto-fill)
+                </button>
+            </div>
+        </div>
+
+        <form id="pdspForm" method="POST" action="<?php echo $basePath; ?>/iep/meetings/pdsp/save">
+            <input type="hidden" name="pdsp_id" value="<?php echo $pdsp['id']; ?>">
+            <input type="hidden" name="meeting_id" value="<?php echo $meeting['id']; ?>">
+
+            <!-- Domain Cards -->
+            <?php foreach ($domainNames as $domainName): ?>
+            <div class="card mb-4" style="border-left: 4px solid #1e4072;">
+                <div class="card-header" style="background-color: #a01422; color: white;">
+                    <h5 class="mb-0"><?php echo htmlspecialchars($domainName); ?></h5>
+                </div>
+                <div class="card-body">
+                    <div class="domain-rows" data-domain="<?php echo htmlspecialchars($domainName); ?>">
+                        <!-- Existing rows will be loaded here -->
+                        <?php
+                        $domainRows = array_filter($domains, fn($d) => $d['domain_name'] === $domainName);
+                        if (empty($domainRows)):
+                        ?>
+                        <!-- Default empty row -->
+                        <div class="domain-row mb-3 p-3" style="background-color: #f9f9f9; border-radius: 6px;">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Sub-Domain</label>
+                                    <input type="text" class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][sub_domain]" placeholder="Enter sub-domain">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Skills Description</label>
+                                    <textarea class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][skills_description]" rows="2" placeholder="Describe skills"></textarea>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Mastered?</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][mastered]" value="1" style="width: 3em; height: 1.5em;">
+                                        <label class="form-check-label ms-2">Yes</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <label class="form-label">Educational Recommendation</label>
+                                    <textarea class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][educational_recommendation]" rows="2" placeholder="Enter recommendation"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Q1 Level of Performance</label>
+                                    <select class="form-select" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][q1_level]" style="border-color: #1e4072;">
+                                        <option value="">Select level</option>
+                                        <?php foreach ($performanceLevels as $value => $label): ?>
+                                        <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Q2 Level of Performance</label>
+                                    <select class="form-select" name="domains[<?php echo htmlspecialchars($domainName); ?>][0][q2_level]" style="border-color: #1e4072;">
+                                        <option value="">Select level</option>
+                                        <?php foreach ($performanceLevels as $value => $label): ?>
+                                        <option value="<?php echo $value; ?>"><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <?php else: ?>
+                        <!-- Load existing rows -->
+                        <?php foreach ($domainRows as $index => $row): ?>
+                        <div class="domain-row mb-3 p-3" style="background-color: #f9f9f9; border-radius: 6px;">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Sub-Domain</label>
+                                    <input type="text" class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][sub_domain]" value="<?php echo htmlspecialchars($row['sub_domain'] ?? ''); ?>" placeholder="Enter sub-domain">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Skills Description</label>
+                                    <textarea class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][skills_description]" rows="2" placeholder="Describe skills"><?php echo htmlspecialchars($row['skills_description'] ?? ''); ?></textarea>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label">Mastered?</label>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][mastered]" value="1" <?php echo $row['mastered'] ? 'checked' : ''; ?> style="width: 3em; height: 1.5em;">
+                                        <label class="form-check-label ms-2">Yes</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <label class="form-label">Educational Recommendation</label>
+                                    <textarea class="form-control" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][educational_recommendation]" rows="2" placeholder="Enter recommendation"><?php echo htmlspecialchars($row['educational_recommendation'] ?? ''); ?></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Q1 Level of Performance</label>
+                                    <select class="form-select" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][q1_level]" style="border-color: #1e4072;">
+                                        <option value="">Select level</option>
+                                        <?php foreach ($performanceLevels as $value => $label): ?>
+                                        <option value="<?php echo $value; ?>" <?php echo ($row['q1_level'] ?? '') === $value ? 'selected' : ''; ?>><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Q2 Level of Performance</label>
+                                    <select class="form-select" name="domains[<?php echo htmlspecialchars($domainName); ?>][<?php echo $index; ?>][q2_level]" style="border-color: #1e4072;">
+                                        <option value="">Select level</option>
+                                        <?php foreach ($performanceLevels as $value => $label): ?>
+                                        <option value="<?php echo $value; ?>" <?php echo ($row['q2_level'] ?? '') === $value ? 'selected' : ''; ?>><?php echo $label; ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- Add Sub-Domain Button -->
+                    <button type="button" class="btn btn-sm btn-outline-secondary add-subdomain-btn" data-domain="<?php echo htmlspecialchars($domainName); ?>">
+                        <i class="bi bi-plus-circle"></i> Add Sub-Domain
+                    </button>
+                </div>
+            </div>
+            <?php endforeach; ?>
+
+            <!-- Save Button -->
+            <div class="card">
+                <div class="card-body text-center">
+                    <button type="submit" class="btn btn-primary btn-lg" style="background-color: #a01422; border-color: #a01422;">
+                        <i class="bi bi-save"></i> Save PDSP Form
+                    </button>
+                    <a href="<?php echo $basePath; ?>/iep/meetings/<?php echo $meeting['id']; ?>" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-x-circle"></i> Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+
+        <!-- Signature Section (if form is saved) -->
+        <?php if ($pdsp['status'] === 'draft' || $pdsp['status'] === 'complete'): ?>
+        <div class="card mt-4">
+            <div class="card-header" style="background-color: #1e4072; color: white;">
+                <h5 class="mb-0"><i class="bi bi-pen"></i> Digital Signatures</h5>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <?php
+                    $signatoryRoles = [
+                        'sped_teacher' => 'SPED Teacher',
+                        'gen_ed_teacher' => 'General Ed Teacher',
+                        'school_head' => 'School Head',
+                        'ilrc_supervisor' => 'ILRC Supervisor',
+                        'parent_guardian' => 'Parent/Guardian',
+                        'medical_allied_1' => 'Medical Allied Health 1',
+                        'medical_allied_2' => 'Medical Allied Health 2',
+                        'medical_allied_3' => 'Medical Allied Health 3'
+                    ];
+                    
+                    foreach ($signatoryRoles as $role => $label):
+                        $signature = $signaturesByRole[$role] ?? null;
+                    ?>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100" style="border: 2px dashed <?php echo $signature ? '#3b6d11' : '#ccc'; ?>;">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><?php echo $label; ?></h6>
+                                <?php if ($signature): ?>
+                                    <img src="<?php echo $basePath . '/' . $signature['signature_image_path']; ?>" alt="Signature" class="img-fluid mb-2" style="max-height: 80px;">
+                                    <p class="small text-muted mb-0"><?php echo htmlspecialchars($signature['signatory_name']); ?></p>
+                                    <p class="small text-muted"><?php echo date('M d, Y', strtotime($signature['signed_at'])); ?></p>
+                                <?php else: ?>
+                                    <div class="text-muted py-4">
+                                        <i class="bi bi-pen" style="font-size: 2rem;"></i>
+                                        <p class="small mt-2">Not signed yet</p>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary sign-btn" data-role="<?php echo $role; ?>" data-label="<?php echo $label; ?>" data-pdsp-id="<?php echo $pdsp['id']; ?>" style="background-color: #a01422; border-color: #a01422;">
+                                        <i class="bi bi-pen"></i> Sign
+                                    </button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- AI Upload Modal -->
+<div class="modal fade" id="aiUploadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #1e4072; color: white;">
+                <h5 class="modal-title"><i class="bi bi-cloud-upload"></i> Upload Handwritten Form (Optional)</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Upload a photo or scanned PDF of your handwritten Part II form. Our AI will attempt to auto-fill the form fields. You can review and correct all fields before saving.
+                </div>
+                
+                <div id="uploadZone" class="text-center p-5" style="border: 3px dashed #a01422; border-radius: 10px; background-color: #f9f9f9; cursor: pointer;">
+                    <i class="bi bi-cloud-upload" style="font-size: 4rem; color: #a01422;"></i>
+                    <h5 class="mt-3">Drag and drop your file here</h5>
+                    <p class="text-muted">or click to browse</p>
+                    <p class="small text-muted">Accepts: JPG, PNG, PDF (Max 10MB)</p>
+                    <input type="file" id="aiFileInput" accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+                </div>
+                
+                <div id="uploadProgress" class="mt-3" style="display: none;">
+                    <div class="text-center">
+                        <div class="spinner-border text-primary" role="status" style="color: #1e4072 !important;">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Reading your document...</p>
+                    </div>
+                </div>
+                
+                <div id="uploadError" class="alert alert-danger mt-3" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Signature Modal -->
+<div class="modal fade" id="signatureModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #a01422; color: white;">
+                <h5 class="modal-title"><i class="bi bi-pen"></i> Digital Signature</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Your Name</label>
+                    <input type="text" id="signatoryName" class="form-control" placeholder="Enter your full name">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Draw your signature below</label>
+                    <div style="border: 2px solid #1e4072; border-radius: 6px;">
+                        <canvas id="signaturePad" width="700" height="200" style="width: 100%; height: 200px; cursor: crosshair;"></canvas>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button type="button" class="btn btn-secondary" id="clearSignature">
+                        <i class="bi bi-x-circle"></i> Clear
+                    </button>
+                    <button type="button" class="btn btn-primary" id="saveSignature" style="background-color: #a01422; border-color: #a01422;">
+                        <i class="bi bi-check-circle"></i> Save Signature
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const basePath = '<?php echo $basePath; ?>';
+    let rowCounters = {};
+    
+    // Initialize row counters for each domain
+    document.querySelectorAll('.domain-rows').forEach(container => {
+        const domain = container.dataset.domain;
+        rowCounters[domain] = container.querySelectorAll('.domain-row').length;
+    });
+    
+    // Add Sub-Domain functionality
+    document.querySelectorAll('.add-subdomain-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const domain = this.dataset.domain;
+            const container = document.querySelector(`.domain-rows[data-domain="${domain}"]`);
+            const index = rowCounters[domain]++;
+            
+            const newRow = document.createElement('div');
+            newRow.className = 'domain-row mb-3 p-3';
+            newRow.style.cssText = 'background-color: #f9f9f9; border-radius: 6px;';
+            newRow.innerHTML = `
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Sub-Domain</label>
+                        <input type="text" class="form-control" name="domains[${domain}][${index}][sub_domain]" placeholder="Enter sub-domain">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Skills Description</label>
+                        <textarea class="form-control" name="domains[${domain}][${index}][skills_description]" rows="2" placeholder="Describe skills"></textarea>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Mastered?</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="domains[${domain}][${index}][mastered]" value="1" style="width: 3em; height: 1.5em;">
+                            <label class="form-check-label ms-2">Yes</label>
+                        </div>
+                    </div>
+                    <div class="col-md-10">
+                        <label class="form-label">Educational Recommendation</label>
+                        <textarea class="form-control" name="domains[${domain}][${index}][educational_recommendation]" rows="2" placeholder="Enter recommendation"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Q1 Level of Performance</label>
+                        <select class="form-select" name="domains[${domain}][${index}][q1_level]" style="border-color: #1e4072;">
+                            <option value="">Select level</option>
+                            <option value="beginning">Beginning (74% and below)</option>
+                            <option value="developing">Developing (75-79%)</option>
+                            <option value="approaching">Approaching Proficiency (80-84%)</option>
+                            <option value="proficient">Proficient (85-89%)</option>
+                            <option value="advanced">Advanced (90% and above)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Q2 Level of Performance</label>
+                        <select class="form-select" name="domains[${domain}][${index}][q2_level]" style="border-color: #1e4072;">
+                            <option value="">Select level</option>
+                            <option value="beginning">Beginning (74% and below)</option>
+                            <option value="developing">Developing (75-79%)</option>
+                            <option value="approaching">Approaching Proficiency (80-84%)</option>
+                            <option value="proficient">Proficient (85-89%)</option>
+                            <option value="advanced">Advanced (90% and above)</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(newRow);
+        });
+    });
+    
+    // AI Upload functionality
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('aiFileInput');
+    const uploadProgress = document.getElementById('uploadProgress');
+    const uploadError = document.getElementById('uploadError');
+    
+    uploadZone.addEventListener('click', () => fileInput.click());
+    
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = '#3b6d11';
+    });
+    
+    uploadZone.addEventListener('dragleave', () => {
+        uploadZone.style.borderColor = '#a01422';
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = '#a01422';
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFileUpload(files[0]);
+        }
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFileUpload(e.target.files[0]);
+        }
+    });
+    
+    function handleFileUpload(file) {
+        // Validate file type
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'application/pdf'];
+        if (!allowedTypes.includes(file.type)) {
+            uploadError.textContent = 'Only JPG, PNG, and PDF files are accepted.';
+            uploadError.style.display = 'block';
+            return;
+        }
+        
+        // Validate file size (10MB)
+        if (file.size > 10 * 1024 * 1024) {
+            uploadError.textContent = 'File too large. Maximum size is 10MB.';
+            uploadError.style.display = 'block';
+            return;
+        }
+        
+        uploadError.style.display = 'none';
+        uploadProgress.style.display = 'block';
+        uploadZone.style.display = 'none';
+        
+        // Create FormData
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('pdsp_id', '<?php echo $pdsp['id']; ?>');
+        
+        // Send to server for AI extraction
+        fetch(basePath + '/iep/meetings/pdsp/ai-extract', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Pre-fill form with extracted data
+                if (data.domains && Array.isArray(data.domains)) {
+                    // TODO: Pre-fill logic here
+                    console.log('Extracted data:', data.domains);
+                }
+                
+                // Close modal and show success
+                bootstrap.Modal.getInstance(document.getElementById('aiUploadModal')).hide();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Form Auto-Filled!',
+                    text: 'Please review and correct all fields before saving.',
+                    confirmButtonColor: '#3b6d11'
+                });
+            } else {
+                throw new Error(data.message || 'AI extraction failed');
+            }
+        })
+        .catch(error => {
+            uploadError.textContent = 'Auto-fill unavailable. Please fill the form manually.';
+            uploadError.style.display = 'block';
+            console.error('AI extraction error:', error);
+        })
+        .finally(() => {
+            uploadProgress.style.display = 'none';
+            uploadZone.style.display = 'block';
+        });
+    }
+    
+    // Signature Pad functionality
+    const canvas = document.getElementById('signaturePad');
+    const signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(0, 0, 0)'
+    });
+    
+    let currentSignatoryRole = null;
+    let currentPdspId = null;
+    
+    document.querySelectorAll('.sign-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentSignatoryRole = this.dataset.role;
+            currentPdspId = this.dataset.pdspId;
+            document.getElementById('signatoryName').value = '';
+            signaturePad.clear();
+            new bootstrap.Modal(document.getElementById('signatureModal')).show();
+        });
+    });
+    
+    document.getElementById('clearSignature').addEventListener('click', () => {
+        signaturePad.clear();
+    });
+    
+    document.getElementById('saveSignature').addEventListener('click', function() {
+        if (signaturePad.isEmpty()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Empty Signature',
+                text: 'Please draw your signature first.',
+                confirmButtonColor: '#ffc107'
+            });
+            return;
+        }
+        
+        const signatoryName = document.getElementById('signatoryName').value.trim();
+        if (!signatoryName) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Name Required',
+                text: 'Please enter your name.',
+                confirmButtonColor: '#ffc107'
+            });
+            return;
+        }
+        
+        // Get signature as data URL
+        const signatureData = signaturePad.toDataURL();
+        
+        // Send to server
+        fetch(basePath + '/iep/meetings/pdsp/save-signature', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                pdsp_id: currentPdspId,
+                signatory_role: currentSignatoryRole,
+                signatory_name: signatoryName,
+                signature_data: signatureData
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                bootstrap.Modal.getInstance(document.getElementById('signatureModal')).hide();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Signature Saved!',
+                    text: data.message,
+                    confirmButtonColor: '#3b6d11'
+                }).then(() => {
+                    location.reload();
+                });
+            } else {
+                throw new Error(data.message || 'Failed to save signature');
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message,
+                confirmButtonColor: '#a01422'
+            });
+        });
+    });
+});
+</script>
+
+<style>
+.form-check-input:checked {
+    background-color: #a01422;
+    border-color: #a01422;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: #a01422;
+    box-shadow: 0 0 0 0.25rem rgba(160, 20, 34, 0.25);
+}
+</style>
+
+<?php require __DIR__ . '/../layouts/footer.php'; ?>

@@ -1,0 +1,1355 @@
+/* SPED LMS — Custom Bootstrap Overrides */
+/* DO NOT ALTER WITHOUT APPROVAL — UI Design System */
+/* Last modified: 2026-05-01 */
+
+:root {
+    --bs-primary: #a01422;
+    --bs-primary-rgb: 160, 20, 34;
+    --bs-secondary: #1e4072;
+    --bs-secondary-rgb: 30, 64, 114;
+    --bs-body-bg: #f5f5f5;
+    --bs-body-color: #2c2c2c;
+    --bs-border-radius: 6px;
+    --bs-success: #3b6d11;
+    --bs-warning: #f59e0b;
+    --sidebar-width: 260px;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE DEFAULTS
+   ============================================ */
+
+/* Camera button hidden by default (shown on mobile via media query) */
+.btn-upload-camera {
+    display: none;
+}
+
+/* Hamburger button hidden by default (shown on mobile via media query) */
+.hamburger-btn {
+    display: none;
+}
+
+/* ============================================
+   SIDEBAR NAVIGATION
+   ============================================ */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, #a01422 0%, #1e4072 100%);
+    padding: 0;
+    z-index: 1000;
+    overflow: hidden; /* Prevent scrolling on the main sidebar */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-logo {
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo img {
+    max-width: 120px;
+    height: auto;
+}
+
+.sidebar-logo h4 {
+    color: #ffffff;
+    margin-top: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.sidebar-menu {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1rem 0;
+    padding-bottom: 160px; /* Increased padding to ensure complete clearance */
+}
+
+.sidebar-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 1.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border-left-color: rgba(160, 20, 34, 0.5);
+}
+
+.sidebar-menu a.active {
+    background-color: rgba(160, 20, 34, 0.15);
+    color: #ffffff;
+    border-left-color: #a01422;
+    font-weight: 600;
+}
+
+.sidebar-menu a i {
+    font-size: 1.2rem;
+    width: 30px;
+    margin-right: 0.75rem;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 1rem 1.5rem;
+}
+
+.sidebar-user {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 120px; /* Ensure consistent height */
+    z-index: 10; /* Ensure it stays on top */
+}
+
+.sidebar-user-info {
+    color: #ffffff;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-user-info .name {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.sidebar-user-info .role {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-user .btn-logout {
+    width: 100%;
+    background-color: rgba(160, 20, 34, 0.8);
+    border: none;
+    color: #ffffff;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.sidebar-user .btn-logout:hover {
+    background-color: #a01422;
+}
+
+/* Ensure proper spacing for last menu items */
+.sidebar-menu a:last-child {
+    margin-bottom: 2rem; /* Extra margin for the last menu item */
+}
+
+.sidebar-divider:last-of-type {
+    margin-bottom: 2rem; /* Extra margin for the last divider */
+}
+
+/* Main content with sidebar */
+.main-content {
+    margin-left: var(--sidebar-width);
+    min-height: 100vh;
+    padding: 2rem;
+    background-color: #f5f5f5;
+}
+
+/* ============================================
+   SPLIT-SCREEN AUTH LAYOUT (Login/Register)
+   ============================================ */
+
+.auth-container {
+    display: flex;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.auth-left {
+    flex: 0 0 50%;
+    background: linear-gradient(135deg, #1e4072 0%, #a01422 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    color: #ffffff;
+    position: relative;
+}
+
+.auth-left::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.05)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+    background-size: cover;
+    opacity: 0.3;
+}
+
+.auth-left-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 500px;
+}
+
+.auth-logo-large {
+    max-width: 200px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.auth-left h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.auth-left p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.auth-right {
+    flex: 0 0 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+.auth-form-container h2 {
+    color: #1e4072;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.auth-form-container .subtitle {
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+/* Responsive: Stack on mobile */
+@media (max-width: 768px) {
+    .auth-container {
+        flex-direction: column;
+    }
+    
+    .auth-left,
+    .auth-right {
+        flex: 0 0 100%;
+    }
+    
+    .auth-left {
+        min-height: 40vh;
+        padding: 2rem;
+    }
+    
+    .auth-left h1 {
+        font-size: 1.75rem;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+}
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+/* Primary Button — Crimson */
+.btn-primary {
+    background-color: #a01422;
+    border-color: #a01422;
+    color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #8a1120;
+    border-color: #8a1120;
+}
+
+/* Secondary Button — Navy */
+.btn-secondary {
+    background-color: #1e4072;
+    border-color: #1e4072;
+    color: #ffffff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background-color: #163358;
+    border-color: #163358;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+    background-color: #ffffff;
+    border: none;
+    border-left: 4px solid #1e4072;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card.card-crimson {
+    border-left-color: #a01422;
+}
+
+.card-header {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+    color: #2c2c2c;
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+.table {
+    background-color: #ffffff;
+}
+
+.table thead {
+    background-color: #1e4072;
+    color: #ffffff;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge.bg-primary {
+    background-color: #a01422 !important;
+}
+
+.badge.bg-secondary {
+    background-color: #1e4072 !important;
+}
+
+.badge.bg-success {
+    background-color: #3b6d11 !important;
+}
+
+.badge.bg-warning {
+    background-color: #f59e0b !important;
+    color: #2c2c2c;
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #a01422;
+    box-shadow: 0 0 0 0.25rem rgba(160, 20, 34, 0.25);
+}
+
+.form-floating > label {
+    color: #6c757d;
+}
+
+/* Two-column form layout for name fields */
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 576px) {
+    .form-row-2col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   ALERTS
+   ============================================ */
+
+.alert-primary {
+    background-color: #a01422;
+    color: #ffffff;
+    border: none;
+}
+
+.alert-secondary {
+    background-color: #1e4072;
+    color: #ffffff;
+    border: none;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.text-primary {
+    color: #a01422 !important;
+}
+
+.text-secondary {
+    color: #1e4072 !important;
+}
+
+.bg-light-surface {
+    background-color: #f5f5f5;
+}
+
+
+/* ============================================
+   NOTIFICATION BELL
+   ============================================ */
+
+/* Hamburger button — shown only on mobile */
+.sidebar-hamburger {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #1e4072;
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    line-height: 1;
+    transition: background 0.2s;
+}
+.sidebar-hamburger:hover {
+    background: #f0f0f0;
+    color: #a01422;
+}
+@media (max-width: 768px) {
+    .sidebar-hamburger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    right: 0;
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    z-index: 999;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.topbar-left {
+    flex: 1;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.topbar-notification {
+    position: relative;
+}
+
+.notification-bell-btn {
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-bell-btn:hover {
+    background: #f8f9fa;
+    color: #a01422;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #dc3545;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    min-width: 18px;
+    text-align: center;
+}
+
+.notification-panel {
+    position: absolute;
+    top: 55px;
+    right: -20px; /* Better alignment with the bell icon */
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 380px;
+    max-height: 500px;
+    overflow: hidden;
+    z-index: 1001;
+}
+
+/* Add arrow pointer to notification panel */
+.notification-panel::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 70px; /* Position arrow above the bell icon */
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #1e4072; /* Match header gradient start color */
+}
+
+.notification-header {
+    background: linear-gradient(135deg, #1e4072 0%, #a01422 100%);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-body {
+    max-height: 440px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    position: relative;
+}
+
+.notification-item:hover {
+    background: #f8f9fa;
+}
+
+.notification-item.unread {
+    background: #fff3cd;
+}
+
+.notification-item.unread::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #a01422;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-right: 0.75rem;
+}
+
+.notification-icon.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.notification-icon.danger {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.notification-icon.info {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #2c2c2c;
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: #adb5bd;
+}
+
+.notification-actions {
+    margin-top: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.notification-actions .btn {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+}
+
+/* User Profile Dropdown */
+.topbar-user {
+    position: relative;
+}
+
+.topbar-user-btn {
+    background: transparent;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.topbar-user-btn:hover {
+    background: #f8f9fa;
+    border-color: #a01422;
+}
+
+.user-avatar {
+    font-size: 2rem;
+    color: #1e4072;
+}
+
+.user-info {
+    text-align: left;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #2c2c2c;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.user-role {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* Adjust main content for topbar */
+.main-content {
+    margin-top: 70px;
+}
+
+
+/* ============================================
+   DOCUMENT PREVIEW & SIGNATURE STYLES
+   ============================================ */
+
+/* Document Card Hover Effect */
+.card.h-100:hover {
+    transform: translateY(-5px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Document Preview Container */
+.document-preview {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #f8f9fa;
+    cursor: pointer;
+}
+
+.document-preview img {
+    transition: transform 0.3s ease;
+}
+
+.document-preview:hover img {
+    transform: scale(1.05);
+}
+
+/* Signature Display */
+.signature-container {
+    background: white;
+    border: 2px solid #1e4072;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signature-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Signature Verification Badge */
+.signature-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #3b6d11 0%, #4a8514 100%);
+    color: white;
+    border-radius: 20px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(59, 109, 17, 0.3);
+}
+
+.signature-verified i {
+    font-size: 1.2rem;
+}
+
+/* Document Status Badges */
+.badge.bg-pending {
+    background-color: #f59e0b !important;
+}
+
+.badge.bg-approved {
+    background-color: #3b6d11 !important;
+}
+
+.badge.bg-rejected {
+    background-color: #dc3545 !important;
+}
+
+/* Document Type Icons */
+.document-icon {
+    font-size: 3.5rem;
+    color: #1e4072;
+    opacity: 0.8;
+}
+
+.document-icon.pdf {
+    color: #dc3545;
+}
+
+.document-icon.image {
+    color: #0d6efd;
+}
+
+/* Review Status Alert */
+.review-status {
+    border-left: 4px solid;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.review-status.approved {
+    border-left-color: #3b6d11;
+    background-color: #d4edda;
+}
+
+.review-status.rejected {
+    border-left-color: #dc3545;
+    background-color: #f8d7da;
+}
+
+.review-status.pending {
+    border-left-color: #f59e0b;
+    background-color: #fff3cd;
+}
+
+/* Document Grid Layout */
+.document-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+/* Lightbox Effect for Images */
+.document-lightbox {
+    cursor: zoom-in;
+    transition: opacity 0.3s ease;
+}
+
+.document-lightbox:hover {
+    opacity: 0.9;
+}
+
+/* Print Button Styling */
+.btn-print {
+    background: linear-gradient(135deg, #1e4072 0%, #2a5a9e 100%);
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(30, 64, 114, 0.3);
+}
+
+.btn-print:hover {
+    background: linear-gradient(135deg, #152f56 0%, #1e4072 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(30, 64, 114, 0.4);
+}
+
+/* Responsive Document Cards */
+@media (max-width: 768px) {
+    .document-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .signature-container {
+        max-width: 100%;
+    }
+}
+
+/* Document Upload Status Timeline */
+.document-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.document-timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #dee2e6;
+}
+
+.document-timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.document-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3b6d11;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #3b6d11;
+}
+
+/* Watermark for Verified Documents */
+.document-watermark {
+    position: relative;
+}
+
+.document-watermark::after {
+    content: 'VERIFIED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 3rem;
+    font-weight: bold;
+    color: rgba(59, 109, 17, 0.1);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+/* ============================================
+   RESPONSIVE — Mobile layout fixes
+   ============================================ */
+
+/* ============================================
+   MOBILE RESPONSIVE SYSTEM
+   ============================================ */
+
+/* Hamburger Menu Toggle */
+.hamburger-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #1e4072;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.hamburger-btn:hover {
+    background: #f0f0f0;
+    color: #a01422;
+}
+
+/* Sidebar Overlay for Mobile */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 999;
+}
+
+/* Mobile Sidebar Behavior */
+@media (max-width: 1024px) {
+    .hamburger-btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        z-index: 1000;
+        width: 260px;
+    }
+    
+    body.sidebar-open .sidebar {
+        transform: translateX(0);
+    }
+    
+    body.sidebar-open .sidebar-overlay {
+        display: block !important;
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+    
+    .topbar {
+        left: 0 !important;
+    }
+    
+    /* Camera upload button visible on mobile */
+    .btn-upload-camera {
+        display: inline-flex !important;
+    }
+    
+    /* Upload buttons layout on mobile */
+    .upload-buttons {
+        display: flex !important;
+        gap: 0.5rem;
+        justify-content: center;
+    }
+    
+    .upload-buttons .btn {
+        flex: 1;
+    }
+}
+
+/* Desktop: Hide mobile elements */
+@media (min-width: 1025px) {
+    .hamburger-btn {
+        display: none !important;
+    }
+    
+    .sidebar-overlay {
+        display: none !important;
+    }
+    
+    .btn-upload-camera {
+        display: none !important;
+    }
+}
+
+/* Mobile Layout Adjustments */
+@media (max-width: 768px) {
+    /* Stack grids and rows */
+    .row, .grid-cols-2, .grid-cols-3 {
+        flex-direction: column !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    .col, [class*="col-"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 1rem;
+    }
+    
+    /* Tables scroll horizontally */
+    .table-responsive, table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Full width buttons */
+    .btn {
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+    
+    .btn-group .btn {
+        width: auto;
+    }
+    
+    /* Cards spacing */
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    /* Upload buttons side by side */
+    .upload-buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .upload-buttons button {
+        flex: 1;
+    }
+    
+    /* Typography adjustments */
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    h2 {
+        font-size: 1.25rem;
+    }
+    
+    /* Page header stacking */
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .page-header .badge-group {
+        flex-wrap: wrap;
+    }
+    
+    /* Notification panel full width on mobile */
+    .notification-panel {
+        width: calc(100vw - 2rem);
+        right: -1rem;
+    }
+    
+    /* Hide arrow on mobile */
+    .notification-panel::before {
+        display: none;
+    }
+    
+    /* User info hidden on small screens */
+    .topbar-user .user-info {
+        display: none;
+    }
+    
+    /* Reduce padding */
+    .main-content {
+        padding: 1rem;
+    }
+    
+    .topbar {
+        padding: 0 1rem;
+    }
+}
+
+/* ============================================
+   UPLOAD ZONE MOBILE ENHANCEMENTS
+   ============================================ */
+
+.upload-zone {
+    border: 2px dashed #a01422;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.upload-zone:hover {
+    border-color: #8a1220;
+    background: #f5f5f5;
+}
+
+.upload-zone.dragover {
+    border-color: #a01422;
+    background: #fff5f5;
+}
+
+.upload-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Mobile upload zone adjustments */
+@media (max-width: 768px) {
+    .upload-zone {
+        padding: 1.5rem 1rem;
+    }
+    
+    .upload-buttons {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+    
+    .upload-buttons button {
+        flex: 1;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   FORM MOBILE RESPONSIVENESS
+   ============================================ */
+
+/* Process-specific mobile layouts */
+
+/* Process 1 — Enrollment Form */
+@media (max-width: 768px) {
+    .enrollment-form .form-group {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .enrollment-form .row {
+        flex-direction: column;
+    }
+    
+    .enrollment-form .form-row-2col {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* Process 2 — Verification */
+@media (max-width: 768px) {
+    .student-list-table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .verification-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .verification-actions .btn {
+        width: 100%;
+    }
+}
+
+/* Process 3 — Assessment */
+@media (max-width: 768px) {
+    .services-checklist {
+        grid-template-columns: 1fr;
+    }
+    
+    .mdt-table-container {
+        overflow-x: auto;
+    }
+    
+    .assessment-section {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Process 4 — IEP Meeting */
+@media (max-width: 768px) {
+    .availability-calendar .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 2px;
+    }
+    
+    .calendar-day {
+        min-height: 32px;
+        font-size: 0.8rem;
+    }
+    
+    .meeting-form .form-group {
+        margin-bottom: 1rem;
+    }
+    
+    .pdsp-domains .domain-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Process 5 — IEP Upload */
+@media (max-width: 768px) {
+    .signatory-item {
+        margin-bottom: 1rem;
+    }
+    
+    .signatory-name {
+        margin-top: 0.5rem;
+    }
+    
+    .iep-history-card {
+        margin-bottom: 1rem;
+    }
+    
+    .iep-form-sections {
+        padding: 1rem;
+    }
+}
+
+/* Process 6 — IEP Implementation */
+@media (max-width: 768px) {
+    .materials-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .material-card {
+        margin-bottom: 1rem;
+    }
+}
+
+/* Process 7 — Learning Activities */
+@media (max-width: 768px) {
+    .activity-modules {
+        grid-template-columns: 1fr;
+    }
+    
+    .module-card {
+        margin-bottom: 1rem;
+    }
+    
+    .progress-bar-container {
+        margin: 1rem 0;
+    }
+}
+
+/* RBAC Mobile Layout */
+@media (max-width: 768px) {
+    .role-selection-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .role-card {
+        margin-bottom: 1rem;
+    }
+    
+    .role-verification-form .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Topbar spans full width on mobile (no sidebar offset) */
+    .topbar {
+        left: 0 !important;
+        padding: 0 1rem;
+    }
+
+    /* Main content no sidebar offset, reduce padding */
+    .main-content {
+        margin-left: 0 !important;
+        padding: 1rem;
+    }
+
+    /* Notification panel narrower on small screens */
+    .notification-panel {
+        width: calc(100vw - 2rem);
+        right: -1rem;
+    }
+    
+    /* Hide arrow on small screens */
+    .notification-panel::before {
+        display: none;
+    }
+
+    /* User info text hidden on very small screens */
+    .user-info {
+        display: none;
+    }
+
+    /* Tables scroll horizontally */
+    .table-responsive-stack {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Cards full width */
+    .card {
+        margin-bottom: 1rem;
+    }
+
+    /* Fix for password toggle button overlapping text on mobile */
+    .form-floating input[type="password"],
+    .form-floating input[id="password"],
+    .form-floating input[id="confirm_password"] {
+        padding-right: 45px !important;
+    }
+}

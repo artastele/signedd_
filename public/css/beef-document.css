@@ -1,0 +1,306 @@
+/* BEEF Document Style - Clean, Print-Friendly */
+
+/* Hide sidebar and topbar when printing */
+@media print {
+    .sidebar, .topbar, .btn, .progress, #prevBtn, #nextBtn, #submitBtn {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    .form-step {
+        page-break-after: always;
+    }
+    
+    .form-step:last-child {
+        page-break-after: auto;
+    }
+}
+
+/* Document Container */
+.beef-document {
+    background: white;
+    max-width: 8.5in;
+    margin: 0 auto;
+    padding: 0.5in;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: 'Times New Roman', Times, serif;
+    color: #000;
+    line-height: 1.4;
+}
+
+/* Document Header */
+.document-header {
+    text-align: center;
+    border-bottom: 3px double #000;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.document-header h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+.document-header h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.document-header p {
+    font-size: 12px;
+    margin: 3px 0;
+}
+
+/* Section Headers */
+.section-header {
+    background: #f0f0f0;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    margin: 20px 0 15px 0;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+/* Form Fields */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.form-field {
+    flex: 1;
+    min-width: 0;
+}
+
+.form-field.full-width {
+    flex: 0 0 100%;
+}
+
+.form-field.half-width {
+    flex: 0 0 calc(50% - 7.5px);
+}
+
+.form-field.third-width {
+    flex: 0 0 calc(33.333% - 10px);
+}
+
+.form-field.quarter-width {
+    flex: 0 0 calc(25% - 11.25px);
+}
+
+.form-label {
+    display: block;
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 3px;
+    color: #000;
+}
+
+.form-control, .form-select {
+    width: 100%;
+    padding: 6px 8px;
+    border: 1px solid #000;
+    border-radius: 0;
+    font-size: 12px;
+    font-family: Arial, sans-serif;
+    background: white;
+}
+
+.form-control:focus, .form-select:focus {
+    outline: 2px solid #000;
+    outline-offset: 0;
+}
+
+.form-text {
+    font-size: 10px;
+    color: #666;
+    font-style: italic;
+    margin-top: 2px;
+}
+
+/* Checkboxes */
+.checkbox-group {
+    border: 1px solid #000;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.checkbox-group-title {
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.checkbox-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    min-width: 200px;
+}
+
+.form-check-input {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000;
+    margin: 0;
+}
+
+.form-check-label {
+    margin: 0;
+    cursor: pointer;
+}
+
+/* Signature Area */
+.signature-box {
+    border: 1px solid #000;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.signature-canvas-container {
+    border: 1px solid #000;
+    background: white;
+    margin: 10px 0;
+}
+
+.signature-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 10px;
+    border-top: 1px solid #000;
+}
+
+.signature-line {
+    text-align: center;
+    flex: 1;
+}
+
+.signature-line-text {
+    border-top: 1px solid #000;
+    padding-top: 5px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* Instructions */
+.instructions {
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 15px 0;
+    font-size: 11px;
+}
+
+.instructions strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Required Field Indicator */
+.required {
+    color: #d00;
+    font-weight: bold;
+}
+
+/* Navigation Buttons (hide on print) */
+.navigation-buttons {
+    position: sticky;
+    bottom: 0;
+    background: white;
+    padding: 15px 0;
+    border-top: 2px solid #ddd;
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+@media print {
+    .navigation-buttons {
+        display: none !important;
+    }
+}
+
+/* Progress Indicator */
+.step-indicator {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 20px;
+    padding: 8px;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+}
+
+@media print {
+    .step-indicator {
+        display: none !important;
+    }
+}
+
+/* Table Style (for address fields) */
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.info-table td {
+    padding: 6px;
+    border: 1px solid #000;
+    font-size: 12px;
+}
+
+.info-table td.label {
+    font-weight: bold;
+    width: 30%;
+    background: #f5f5f5;
+}
+
+/* File Upload */
+.file-upload-box {
+    border: 2px dashed #000;
+    padding: 15px;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.file-upload-box input[type="file"] {
+    margin: 10px 0;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .beef-document {
+        padding: 15px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .form-field.half-width,
+    .form-field.third-width,
+    .form-field.quarter-width {
+        flex: 0 0 100%;
+    }
+}

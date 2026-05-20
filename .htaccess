@@ -1,0 +1,13 @@
+# SPED LMS — Root .htaccess
+# Redirects all requests to the public folder
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # If the request is not for a file in public folder
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Redirect to public folder
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
